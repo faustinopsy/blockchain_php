@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<title>BlockChain em PHP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="css/w3.css">
+<script src="js/w3.js"></script>
+<script src="js/jquery-2.2.3.min.js"></script>
+<body onload="atualizar()">
+<div class="w3-cell-row">
+<div class="w3-container w3-green w3-cell">
+    <p>Anuncio.</p>
+  </div>
+  <div class="w3-container  w3-cell w3-card w3-margin-bottom w3-round-large">
+       <form method="post" onsubmit="return postTese2();" >
+      <p><input class="w3-input w3-padding-14" type="text" placeholder="Nome" required="" name="nomeremetente"></p>
+      <p><input class="w3-input w3-padding-14" type="text" placeholder="Email" required="" name="emailremetente"></p>
+      <p><input class="w3-input w3-padding-14" type="text" placeholder="Mensagem" required="" name="mensagem"></p>
+      <p>
+        <button class="w3-button w3-light-grey w3-padding-large" type="submit">
+          <i class="fa fa-paper-plane"></i> Enviar </button>
+      </p>
+    </form>
+   
+   </div>
+     <script type="text/javascript">
+      function openForm() {
+  document.getElementById("myForm").style.display = "block";
+  document.getElementById("botaoabre").style.display = "none";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+  document.getElementById("botaoabre").style.display = "block";
+}
+    $(document).ready(function() {
+      $('.close').click(function () {
+      $('.valida').remove();
+      $('.abrir').slideToggle();
+       });
+    });
+    function postTese2() {
+        var campo1 = $('input[name="nomeremetente"]').val();
+        var campo2 = $('input[name="emailremetente"]').val();
+        var campo3 = $('input[name="mensagem"]').val();
+        $.ajax({
+            data: {nome: campo1, email: campo2, comment: campo3},
+            url: 'addbloco.php',
+            dataType: 'html',
+            type: 'POST',
+            beforeSend: function () {
+               atualizar();
+            },
+            success: function (data) {
+        $('.mostrapost').html(data);
+        $('input[name="nomeremetente"]').val('');
+        $('input[name="emailremetente"]').val('');
+        $('input[name="mensagem"]').val('');
+            }
+        });
+        return false;
+    }
+</script>
+
+  <div class="w3-container w3-green w3-cell">
+    <p>Anuncio.</p>
+  </div>
+</div>
+<ul id="id01">
+  <li w3-repeat="blocos">{{Nome}} | {{Email}} | {{blocoAtual}} | {{BlocoAnterior}}</li>
+
+</ul>
+
+<script>
+function atualizar(){
+w3.getHttpObject("walkchain.php", myFunction);
+
+function myFunction(myObject) {
+  var i;
+  var myArray = myObject.blocos;
+  for (i = 0; i < myArray.length; i++) {
+  myArray[i]["Nome"] =myArray[i]["Nome"].toUpperCase();
+   myArray[i]["Email"] =myArray[i]["Email"].toUpperCase();
+   myArray[i]["blocoAtual"] =myArray[i]["blocoAtual"].toUpperCase();
+   myArray[i]["BlocoAnterior"] =myArray[i]["BlocoAnterior"].toUpperCase();
+  }
+  w3.displayObject("id01", myObject);
+}
+}
+</script>
