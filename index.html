@@ -4,8 +4,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="css/w3.css">
-<script src="js/w3.js"></script>
+
 <script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/w3.js"></script>
 <body onload="atualizar()">
 <div class="w3-cell-row">
 <div class="w3-container w3-green w3-cell">
@@ -56,6 +57,7 @@ function closeForm() {
         $('input[name="nomeremetente"]').val('');
         $('input[name="emailremetente"]').val('');
         $('input[name="mensagem"]').val('');
+		atualizar();
             }
         });
         return false;
